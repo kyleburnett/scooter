@@ -82,7 +82,7 @@ array.
 int getBestAction()
 {
   int best = 0;
-  float bestValue = 0;
+  float bestValue = -1.0;
   for (int i = 0; i < 4; ++i)
   {
     if (values[armPos][handPos][i] > bestValue)
@@ -109,6 +109,36 @@ corresponds to the legality of the i-th move
 boolean * getMovesLegality()
 {
   boolean actions[4] = {true, true, true, true};
+  // If we are at the last arm postion, can't go up
+  if (armPos == 7)
+  {
+    actions[0] = false;
+    actions[1] = false;
+  }
+  // If we are at the last hand position, can't go up
+  if (handPos == 7)
+  {
+    actions[0] = false;
+    actions[2] = false;
+  }
+  // If we are at the first arm position, can't go down
+  if (armPos == 0)
+  {
+    actions[2] = false;
+    actions[3] = false;
+  }
+  // If we are at the last hand position, can't go up
+  if (handPos == 0)
+  {
+    actions[1] = false;
+    actions[3] = false;
+  }
+  // If we are at arm position 1, can't go down unless hand is at 1
+  if (armPos == 1 && handPos != 1)
+  {
+    actions[2] = false;
+    actions[3] = false;
+  }
   return actions;
 }
 
