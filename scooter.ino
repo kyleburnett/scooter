@@ -153,18 +153,25 @@ void performAction()
 
 float getReward()
 {
+  //Retrieve reward values depending on the change in position to either closer or farther from the goal.
   newPos = getPos();
   
+  //Closer to goal.
   if newPos < pos
   {
+    pos = newPos;
     return 1.0;
   }
+  //Farther from goal
   else if newPos > pos
   {
+    pos = newPos;
     return -1.0
   }
+  //No position change
   else
   {
+    pos = newPos;
     return 0.0;
   }
 }
