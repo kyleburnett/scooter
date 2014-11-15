@@ -154,6 +154,9 @@ void performAction()
   if coinflip < epsilon
   {
     //Random Legal Action
+    //Produces a random value for Arm and Hand position between 0 and 7
+    armPos  = random(8);
+    handPos = random(8);
   }
   else
   {
