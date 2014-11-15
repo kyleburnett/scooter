@@ -149,9 +149,9 @@ void performAction()
   // Otherwise, act according to best action
   randomSeed(analogRead(0));
   
-  long coinflip = random(0.0,1.0);
+  long coinflip = random(100);
   
-  if coinflip < epsilon
+  if coinflip < (epsilon*100)
   {
     //Random Legal Action
     //Produces a random value for Arm and Hand position between 0 and 7
