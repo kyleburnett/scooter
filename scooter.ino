@@ -94,6 +94,7 @@ int getBestAction()
   return best;
 }
 
+
 /*
 Legal moves are defined as indexed values 0 through 3 as follows
 index |  meaning
@@ -142,6 +143,35 @@ boolean * getMovesLegality()
   return actions;
 }
 
+void randomAction(int direction)
+{
+  //Arm up, hand up
+  if (direction == 0)
+  {
+    armPos  = random(armPos, 8);
+    handPos = random(handPos,8);
+  }
+  //Arm up, hand down
+  else if (direction == 1)
+  {
+    armPos  = random(armPos, 8);
+    handPos = random(0,handPos);
+  }
+  //Arm down, hand up
+  else if (direction == 2)
+  {
+    armPos  = random(0, armPos);
+    handPos = random(handPos,8);
+  }
+  //Arm down, hand down
+  else if (direction == 3)
+  {
+    armPos  = random(0, armPos);
+    handPos = random(0,handPos);
+  }
+  return;
+}
+
 void performAction()
 {
   // Get legal actions
@@ -154,9 +184,28 @@ void performAction()
   if (coinflip < (epsilon*100))
   {
     //Random Legal Action
+    
+    /*********************************************************************
+    //Old Code for complete random change                               
     //Produces a random value for Arm and Hand position between 0 and 7
     armPos  = random(8);
     handPos = random(8);
+    *********************************************************************/
+    
+    boolean check = false;
+    legalActions = getMovesLegality()
+    
+    while(!check)
+    {
+      randLegal = random(5);
+      
+      if ( legalActions(randLegal) )
+      {
+        check = true;
+        randomAction(randLegal);
+      }
+    }
+    
   }
   else
   {
