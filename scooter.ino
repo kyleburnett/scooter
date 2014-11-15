@@ -149,9 +149,9 @@ void performAction()
   // Otherwise, act according to best action
   randomSeed(analogRead(0));
   
-  long rand = random(0.0,1.0);
+  long coinflip = random(0.0,1.0);
   
-  if rand < epsilon
+  if coinflip < epsilon
   {
     //Random Legal Action
   }
