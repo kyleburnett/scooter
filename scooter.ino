@@ -197,14 +197,6 @@ void performAction()
   if (coinflip < (epsilon*100))
   {
     //Random Legal Action
-    
-    /*********************************************************************
-    //Old Code for complete random change                               
-    //Produces a random value for Arm and Hand position between 0 and 7
-    armPos  = random(8);
-    handPos = random(8);
-    *********************************************************************/
-    
     boolean check = false;
     legalActions = getMovesLegality()
     
