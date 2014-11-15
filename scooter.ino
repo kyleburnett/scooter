@@ -147,8 +147,18 @@ void performAction()
   // Get legal actions
   // With probability epsilon, choose action randomly
   // Otherwise, act according to best action
-  
   randomSeed(analogRead(0));
+  
+  long rand = random(0.0,1.0);
+  
+  if rand < epsilon
+  {
+    //Random Legal Action
+  }
+  else
+  {
+    //Use Best Action Policy
+  }
   
   moveArm();
   moveHand();
