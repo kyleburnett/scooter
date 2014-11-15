@@ -151,7 +151,7 @@ void performAction()
   
   long coinflip = random(100);
   
-  if coinflip < (epsilon*100)
+  if (coinflip < (epsilon*100))
   {
     //Random Legal Action
     //Produces a random value for Arm and Hand position between 0 and 7
@@ -173,13 +173,13 @@ float getReward()
   newPos = getPos();
   
   //Closer to goal.
-  if newPos < pos
+  if (newPos < pos)
   {
     pos = newPos;
     return 1.0;
   }
   //Farther from goal
-  else if newPos > pos
+  else if (newPos > pos)
   {
     pos = newPos;
     return -1.0
