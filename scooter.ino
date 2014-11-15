@@ -153,7 +153,20 @@ void performAction()
 
 float getReward()
 {
-  return 0.0;
+  newPos = getPos();
+  
+  if newPos < pos
+  {
+    return 1.0;
+  }
+  else if newPos > pos
+  {
+    return -1.0
+  }
+  else
+  {
+    return 0.0;
+  }
 }
 
 void updateValues()
