@@ -143,6 +143,19 @@ boolean * getMovesLegality()
   return actions;
 }
 
+/*
+Legal moves are defined as indexed values 0 through 3 as follows
+index |  meaning
+------+----------------------
+  0   |  arm up; hand up
+  1   |  arm up; hand down
+  2   |  arm down; hand up
+  3   |  arm down; hand down
+-----------------------------
+randomAction() takes in a integer according the legal move index 
+produced at random and changes the arm and hand position 
+according to that requested change.
+ */
 void randomAction(int direction)
 {
   //Arm up, hand up
