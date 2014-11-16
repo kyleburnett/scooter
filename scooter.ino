@@ -217,7 +217,7 @@ void performAction()
     //Use Best Action Policy to get best legal movement scheme and execute it 
     int action = getBestAction();
     
-    randomAction(action;
+    randomAction(action);
   }
   
   moveArm();
