@@ -16,7 +16,6 @@ const float epsilon = 0.05,
             discount = 0.9;
 float values[8][8][4];
 long pos;
-int lastAction;
 /*
 index |  armValue  |  handValue
 ------+------------+-----------
@@ -60,7 +59,7 @@ void loop()
 {
   performAction();
   float reward = getReward();
-  updateValues(reward);
+  updateValues();
 }
 
 void moveArm()
@@ -153,27 +152,37 @@ index |  meaning
   2   |  arm down; hand up
   3   |  arm down; hand down
 -----------------------------
-doAction() takes an action and changes the armPos and handPos indices
-accordingly.
+randomAction() takes in a integer according the legal move index 
+produced at random and changes the arm and hand position 
+according to that requested change.
  */
-void doAction(int action)
+void randomAction(int direction)
 {
-  if (action == 0 || action == 1)
+  //Arm up, hand up
+  if (direction == 0)
   {
-    armPos++;
+    armPos  = random(armPos, 8);
+    handPos = random(handPos,8);
   }
-  else
+  //Arm up, hand down
+  else if (direction == 1)
   {
-    armPos--;
+    armPos  = random(armPos, 8);
+    handPos = random(0,handPos);
   }
-  if (action == 0 || action == 2)
+  //Arm down, hand up
+  else if (direction == 2)
   {
-    handPos++;
+    armPos  = random(0, armPos);
+    handPos = random(handPos,8);
   }
-  else
+  //Arm down, hand down
+  else if (direction == 3)
   {
-    handPos--;
+    armPos  = random(0, armPos);
+    handPos = random(0,handPos);
   }
+  return;
 }
 
 void performAction()
@@ -189,17 +198,16 @@ void performAction()
   {
     //Random Legal Action
     boolean check = false;
-    boolean * legalActions = getMovesLegality();
+    legalActions = getMovesLegality()
     
     while(!check)
     {
-      int randLegal = random(5);
+      randLegal = random(5);
       
-      if ( legalActions[randLegal] )
+      if ( legalActions(randLegal) )
       {
         check = true;
-        doAction(randLegal);
-        lastAction = randLegal;
+        randomAction(randLegal);
       }
     }
     
@@ -209,8 +217,7 @@ void performAction()
     //Use Best Action Policy to get best legal movement scheme and execute it 
     int action = getBestAction();
     
-    doAction(action);
-    lastAction = action;
+    randomAction(action);
   }
   
   moveArm();
@@ -220,7 +227,7 @@ void performAction()
 float getReward()
 {
   //Retrieve reward values depending on the change in position to either closer or farther from the goal.
-  long newPos = getPos();
+  newPos = getPos();
   
   //Closer to goal.
   if (newPos < pos)
@@ -232,7 +239,7 @@ float getReward()
   else if (newPos > pos)
   {
     pos = newPos;
-    return -1.0;
+    return -1.0
   }
   //No position change
   else
@@ -242,50 +249,8 @@ float getReward()
   }
 }
 
-float getQValue(int action)
+void updateValues()
 {
-  int nextArm, nextHand;
-  if (action == 0 || action == 1)
-  {
-    nextArm = armPos + 1;
-  }
-  else
-  {
-    nextArm = armPos - 1;
-  }
-  if (action == 0 || action == 2)
-  {
-    nextHand = handPos + 1;
-  }
-  else
-  {
-    nextHand = handPos - 1;
-  }
-  return values[nextArm][nextHand][action];
-}
-
-void updateValues(float reward)
-{
-  boolean * legalActions = getMovesLegality();
-  float maxValue = -1.0;
-  for (int i = 0; i < 4; ++i)
-  {
-    if (legalActions[i])
-    {
-      float value = getQValue(i);
-      if (value > maxValue)
-      {
-        maxValue = value;
-      }
-    }
-  }
-  
-  // sample = R(s,a,s') + gamma * max_a'{Q(s',a')}
-  float sample = reward + discount * maxValue;
-  
-  // Q(s,a) <- (1-alpha) * Q(s,a) + alpha * sample
-  float prevValue = values[armPos][handPos][lastAction];
-  values[armPos][handPos][lastAction] = (1 - alpha) * prevValue + alpha * sample;
 }
 
 long getPos()
