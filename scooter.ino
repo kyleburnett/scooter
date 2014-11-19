@@ -187,7 +187,7 @@ void performAction()
   
   if (coinflip < (epsilon*100))
   {
-    //Random Legal Action
+    // Random Legal Action
     boolean check = false;
     boolean * legalActions = getMovesLegality();
     
@@ -206,7 +206,7 @@ void performAction()
   }
   else
   {
-    //Use Best Action Policy to get best legal movement scheme and execute it 
+    // Use Best Action Policy to get best legal movement schemeand execute it
     int action = getBestAction();
     
     doAction(action);
@@ -219,22 +219,23 @@ void performAction()
 
 float getReward()
 {
-  //Retrieve reward values depending on the change in position to either closer or farther from the goal.
+  // Retrieve reward values depending on the change in
+  // position to either closer or farther from the goal.
   long newPos = getPos();
   
-  //Closer to goal.
+  // Closer to goal.
   if (newPos < pos)
   {
     pos = newPos;
     return 1.0;
   }
-  //Farther from goal
+  // Farther from goal
   else if (newPos > pos)
   {
     pos = newPos;
     return -1.0;
   }
-  //No position change
+  // No position change
   else
   {
     pos = newPos;
